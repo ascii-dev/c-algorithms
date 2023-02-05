@@ -75,6 +75,15 @@ int pop(Array *self) {
     return self->array[--self->size];
 }
 
+int find(Array *self, int item) {
+    int *array = self->array;
+
+    for (int i = 0; i < self->size; i++)
+        if (array[i] == item) return item;
+    
+    return -1;
+}
+
 void resize(Array *self, int new_capacity) {
     int new_size = new_capacity;
     if (self->size < self->capacity / CAPACITY_DECREMENT_FACTOR)

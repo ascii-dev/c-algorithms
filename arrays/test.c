@@ -11,6 +11,8 @@ void test_at_valid_index_successful();
 void test_at_invalid_index_returns_minus_1();
 void test_push_adds_new_item_to_array();
 void test_pop_removes_item_from_array();
+void test_find_item_in_array();
+void test_find_item_not_in_array_returns_minus_1();
 
 
 int main() {
@@ -25,6 +27,8 @@ int main() {
     test_at_invalid_index_returns_minus_1();
     test_push_adds_new_item_to_array();
     test_pop_removes_item_from_array();
+    test_find_item_in_array();
+    test_find_item_not_in_array_returns_minus_1();
 
     return 0;
 }
@@ -157,6 +161,34 @@ void test_at_invalid_index_returns_minus_1() {
     push(new_array, 12);
 
     assert(at(new_array, 3) == -1);
+
+    destroy(new_array);
+}
+
+void test_find_item_in_array() {
+    printf("test find existing item returns the item\n");
+
+    Array *new_array = construct(5);
+
+    push(new_array, 10);
+    push(new_array, 11);
+    push(new_array, 12);
+
+    assert(find(new_array, 12) == 12);
+
+    destroy(new_array);
+}
+
+void test_find_item_not_in_array_returns_minus_1() {
+    printf("test find non-existing item returns -1\n");
+
+    Array *new_array = construct(5);
+
+    push(new_array, 10);
+    push(new_array, 11);
+    push(new_array, 12);
+
+    assert(find(new_array, 16) == -1);
 
     destroy(new_array);
 }
