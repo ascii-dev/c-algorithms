@@ -116,6 +116,12 @@ void delete_at(Array *self, int index) {
         resize(self, self->capacity);
 }
 
+void remove_item(Array *self, int item) {
+    for (int i = 0; i < size(self); i++)
+        if (self->array[i] == item)
+            delete_at(self, i);
+}
+
 void resize(Array *self, int new_capacity) {
     int new_size = new_capacity;
     if (self->size < self->capacity / CAPACITY_DECREMENT_FACTOR)

@@ -19,7 +19,7 @@ int insert(Array *self, int index, int item);
 void prepend(Array *self, int item);
 int pop(Array *self);
 void delete_at(Array *self, int index);
-int remove_item(Array *self, int item);
+void remove_item(Array *self, int item);
 int find(Array *self, int item);
 
 #endif
