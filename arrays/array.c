@@ -19,7 +19,6 @@ IMPLEMENT A VECTOR (MUTABLE ARRAY WITH AUTOMATIC RESIZING):
 * When you reach capacity, resize to double the size
 * Wwhen popping an item, if size is 1/4 of capacity, resize to half
 */
-#include <stdio.h>
 #include <stdlib.h>
 
 #include "array.h"
@@ -104,6 +103,8 @@ int insert(Array *self, int index, int item) {
 void prepend(Array *self, int item) {
     insert(self, 0, item);
 }
+
+
 
 void resize(Array *self, int new_capacity) {
     int new_size = new_capacity;
