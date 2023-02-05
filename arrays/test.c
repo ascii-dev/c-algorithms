@@ -13,6 +13,8 @@ void test_push_adds_new_item_to_array();
 void test_pop_removes_item_from_array();
 void test_find_item_in_array();
 void test_find_item_not_in_array_returns_minus_1();
+void test_insert_item_in_array();
+void test_insert_item_in_invalid_index_returns_minus_1();
 
 
 int main() {
@@ -29,6 +31,8 @@ int main() {
     test_pop_removes_item_from_array();
     test_find_item_in_array();
     test_find_item_not_in_array_returns_minus_1();
+    test_insert_item_in_array();
+    test_insert_item_in_invalid_index_returns_minus_1();
 
     return 0;
 }
@@ -189,6 +193,39 @@ void test_find_item_not_in_array_returns_minus_1() {
     push(new_array, 12);
 
     assert(find(new_array, 16) == -1);
+
+    destroy(new_array);
+}
+
+void test_insert_item_in_array() {
+    printf("test insert item in array successfully returns 0\n");
+
+    Array *new_array = construct(6);
+
+    push(new_array, 10);
+    push(new_array, 11);
+    push(new_array, 12);
+
+    int end_array[] = {10, 2, 11, 12};
+
+    assert(insert(new_array, 1, 2) == 0);
+
+    for (int i = 0; i < 4; i++)
+        assert(at(new_array, i) == end_array[i]);
+
+    destroy(new_array);
+}
+
+void test_insert_item_in_invalid_index_returns_minus_1() {
+    printf("test insert item in invalid index returns -1\n");
+
+    Array *new_array = construct(6);
+
+    push(new_array, 10);
+    push(new_array, 11);
+    push(new_array, 12);
+
+    assert(insert(new_array, 60, 7) == -1);
 
     destroy(new_array);
 }

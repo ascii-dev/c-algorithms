@@ -19,7 +19,9 @@ IMPLEMENT A VECTOR (MUTABLE ARRAY WITH AUTOMATIC RESIZING):
 * When you reach capacity, resize to double the size
 * Wwhen popping an item, if size is 1/4 of capacity, resize to half
 */
+#include <stdio.h>
 #include <stdlib.h>
+
 #include "array.h"
 
 const int DEFAULT_CAPACITY = 16;
@@ -64,9 +66,9 @@ int at(Array *self, int index) {
 }
 
 void push(Array *self, int item) {
-    if (self->size >= self->capacity) {
+    if (self->size + 1 >= self->capacity)
         resize(self, self->capacity * CAPACITY_FACTOR);
-    }
+
     self->array[self->size++] = item;
 }
 
@@ -82,6 +84,21 @@ int find(Array *self, int item) {
         if (array[i] == item) return item;
     
     return -1;
+}
+
+int insert(Array *self, int index, int item) {
+    if (index < 0 || index >= self->size) return -1;
+
+    if (self->size + 1 >= self->capacity)
+        resize(self, self->capacity * CAPACITY_FACTOR);
+
+    for (int i = self->size; i >= index; i--)
+        self->array[i] = self->array[i - 1];
+
+    self->array[index] = item;
+    self->size++;
+
+    return 0;
 }
 
 void resize(Array *self, int new_capacity) {
