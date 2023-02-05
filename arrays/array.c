@@ -104,7 +104,17 @@ void prepend(Array *self, int item) {
     insert(self, 0, item);
 }
 
+void delete_at(Array *self, int index) {
+    if (index < 0 || index >= self->size) return;
 
+    for (int i = index; i < self->size; i++)
+        self->array[i] = self->array[i + 1];
+
+    self->size--;
+
+    if (self->size < self->capacity / CAPACITY_DECREMENT_FACTOR)
+        resize(self, self->capacity);
+}
 
 void resize(Array *self, int new_capacity) {
     int new_size = new_capacity;

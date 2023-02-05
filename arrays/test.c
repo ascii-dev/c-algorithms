@@ -16,6 +16,7 @@ void test_find_item_not_in_array_returns_minus_1();
 void test_insert_item_in_array();
 void test_insert_item_in_invalid_index_returns_minus_1();
 void test_prepend_item_in_array();
+void test_delete_item_at_index_in_array();
 
 
 int main() {
@@ -35,6 +36,7 @@ int main() {
     test_insert_item_in_array();
     test_insert_item_in_invalid_index_returns_minus_1();
     test_prepend_item_in_array();
+    test_delete_item_at_index_in_array();
 
     return 0;
 }
@@ -246,6 +248,27 @@ void test_prepend_item_in_array() {
     prepend(new_array, 2);
 
     for (int i = 0; i < 4; i++)
+        assert(at(new_array, i) == end_array[i]);
+
+    destroy(new_array);
+}
+
+void test_delete_item_at_index_in_array() {
+    printf("test delete item at index in array\n");
+
+    Array *new_array = construct(6);
+
+    push(new_array, 10);
+    push(new_array, 11);
+    push(new_array, 12);
+    push(new_array, 2);
+
+    int end_array[] = {10, 12, 2};
+
+    delete_at(new_array, 1);
+
+    int size_ = size(new_array);
+    for (int i = 0; i < size_; i++)
         assert(at(new_array, i) == end_array[i]);
 
     destroy(new_array);

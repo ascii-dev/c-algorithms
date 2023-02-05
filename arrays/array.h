@@ -18,7 +18,7 @@ void push(Array *self, int item);
 int insert(Array *self, int index, int item);
 void prepend(Array *self, int item);
 int pop(Array *self);
-void delete_item(Array *self, int index);
+void delete_at(Array *self, int index);
 int remove_item(Array *self, int item);
 int find(Array *self, int item);
 
