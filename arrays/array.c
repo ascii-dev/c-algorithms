@@ -34,7 +34,8 @@ Array *construct(int capacity) {
     }
 
     Array *new_array = malloc(sizeof(Array));
-    new_array->size = new_array->capacity = capacity;
+    new_array->size = 0;
+    new_array->capacity = capacity;
     new_array->array = (int *) malloc(sizeof(int) * capacity);
 
     return new_array;
@@ -43,7 +44,6 @@ Array *construct(int capacity) {
 void destroy(Array *self) {
     free(self->array);
     free(self);
-    self = NULL;
 }
 
 int size(Array *self) {
@@ -67,11 +67,11 @@ void push(Array *self, int item) {
     if (self->size >= self->capacity) {
         resize(self, self->capacity * CAPACITY_FACTOR);
     }
-    self->array[++self->size] = item;
+    self->array[self->size++] = item;
 }
 
 int pop(Array *self) {
-    if (self->size == 0) return (int) -1;
+    if (is_empty(self)) return (int) -1;
     return self->array[--self->size];
 }
 
