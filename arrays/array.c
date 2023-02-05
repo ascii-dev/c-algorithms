@@ -122,6 +122,8 @@ void remove_item(Array *self, int item) {
             delete_at(self, i);
 }
 
+/* Commenting this out because I have a new version below using realloc but 
+still want to keep this around for study purposes.
 void resize(Array *self, int new_capacity) {
     int new_size = new_capacity;
     if (self->size < self->capacity / CAPACITY_DECREMENT_FACTOR)
@@ -135,4 +137,15 @@ void resize(Array *self, int new_capacity) {
         new_array[i] = self->array[i];
 
     self->array = new_array;
+}
+*/
+
+void resize(Array *self, int new_capacity) {
+    int new_size = new_capacity;
+    if (self->size < self->capacity / CAPACITY_DECREMENT_FACTOR)
+        new_size = self->capacity / CAPACITY_DECREMENT_FACTOR;
+
+    self->capacity = new_capacity;
+
+    self->array = realloc(self->array, sizeof(int) * self->capacity);
 }
