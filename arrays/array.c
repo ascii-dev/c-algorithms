@@ -101,6 +101,10 @@ int insert(Array *self, int index, int item) {
     return 0;
 }
 
+void prepend(Array *self, int item) {
+    insert(self, 0, item);
+}
+
 void resize(Array *self, int new_capacity) {
     int new_size = new_capacity;
     if (self->size < self->capacity / CAPACITY_DECREMENT_FACTOR)
