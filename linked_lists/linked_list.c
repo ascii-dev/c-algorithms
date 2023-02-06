@@ -132,3 +132,28 @@ int value_at(LinkedList *self, int index) {
 
     return current->data;
 }
+
+int insert_at(LinkedList *self, int index, int value) {
+    if (empty(self) == true) return -1;
+    if (index < 0 || index > self->size) return -1;
+
+    if (index == 0)
+        push_front(self, value);
+    else if (index == self->size)
+        push_back(self, value);
+    else {
+        Node *new_node = malloc(sizeof(Node));
+        new_node->data = value;
+        new_node->next = NULL;
+
+        Node *current = self->head;
+        for (int i = 1; i < index; i++)
+            current = current->next;
+        
+        new_node->next = current->next;
+        current->next = new_node;
+        self->size++;
+    }
+
+    return 0;
+}
