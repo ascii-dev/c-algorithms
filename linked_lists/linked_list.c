@@ -157,3 +157,25 @@ int insert_at(LinkedList *self, int index, int value) {
 
     return 0;
 }
+
+int erase_at(LinkedList *self, int index) {
+    if (empty(self) == true) return -1;
+    if (index < 0 || index > self->size) return -1;
+
+    if (index == 0)
+        pop_front(self);
+    else if (index == self->size)
+        pop_back(self);
+    else {
+        Node *current = self->head;
+        for (int i = 1; i < index; i++)
+            current = current->next;
+
+        Node *to_erase = current->next;
+        current->next = to_erase->next;
+        self->size--;
+        free(to_erase);
+    }
+
+    return 0;
+}

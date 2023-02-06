@@ -27,5 +27,6 @@ int back(LinkedList *self);
 int pop_back(LinkedList *self);
 int value_at(LinkedList *self, int index);
 int insert_at(LinkedList *self, int index, int value);
+int erase_at(LinkedList *self, int index);
 
 #endif // ASCII_LINKED_LISTS
