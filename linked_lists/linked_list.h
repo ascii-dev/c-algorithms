@@ -25,5 +25,6 @@ void push_back(LinkedList *self, int value);
 int front(LinkedList *self);
 int back(LinkedList *self);
 int pop_back(LinkedList *self);
+int value_at(LinkedList *self, int index);
 
 #endif // ASCII_LINKED_LISTS

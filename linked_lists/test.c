@@ -12,6 +12,7 @@ void test_push_back_adds_node_to_tail();
 void test_front_function_returns_correct_data();
 void test_back_function_returns_correct_data();
 void test_pop_back_returns_correct_data();
+void test_value_at_returns_correct_data();
 
 int main() {
     printf("==============================================================\n");
@@ -27,6 +28,7 @@ int main() {
     test_front_function_returns_correct_data();
     test_back_function_returns_correct_data();
     test_pop_back_returns_correct_data();
+    test_value_at_returns_correct_data();
 
     return 0;
 }
@@ -172,6 +174,21 @@ void test_pop_back_returns_correct_data() {
     assert(pop_back(new_ll) == 1);
     assert(new_ll->tail->data == 2);
     assert(new_ll->size == 3);
+
+    destroy(new_ll);
+}
+
+void test_value_at_returns_correct_data() {
+    printf("test value_at returns correct data\n");
+
+    LinkedList *new_ll = construct();
+    push_front(new_ll, 1);
+    push_front(new_ll, 2);
+    push_front(new_ll, 3);
+    push_front(new_ll, 4);
+
+    assert(value_at(new_ll, 2) == 2);
+    assert(value_at(new_ll, 4) == -1);
 
     destroy(new_ll);
 }

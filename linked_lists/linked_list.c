@@ -121,3 +121,14 @@ int pop_back(LinkedList *self) {
 
     return return_value;
 }
+
+int value_at(LinkedList *self, int index) {
+    if (empty(self) == true) return -1;
+    if (index < 0 || index >= self->size) return -1;
+
+    Node *current = self->head;
+    for (int i = 1; i <= index; i++)
+        current = current->next;
+
+    return current->data;
+}
