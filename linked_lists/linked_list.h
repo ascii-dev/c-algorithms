@@ -15,5 +15,6 @@ typedef struct LinkedList {
 
 LinkedList *construct();
 void destroy(LinkedList *self);
+void push_front(LinkedList *self, int value);
 
 #endif // ASCII_LINKED_LISTS

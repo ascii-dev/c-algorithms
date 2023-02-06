@@ -41,3 +41,15 @@ void destroy(LinkedList *self) {
     free(self->head);
     free(self->tail);
 }
+
+void push_front(LinkedList *self, int value) {
+    Node *new_node = malloc(sizeof(Node));
+    new_node->data = value;
+    new_node->next = self->head;
+    self->head = new_node;
+
+    if (self->tail == NULL)
+        self->tail = self->head;
+    
+    self->size++;
+}
