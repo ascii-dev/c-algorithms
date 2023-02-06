@@ -93,3 +93,15 @@ void push_back(LinkedList *self, int value) {
 
     self->size++;
 }
+
+int front(LinkedList *self) {
+    if (empty(self) == true) return -1;
+
+    return self->head->data;
+}
+
+int back(LinkedList *self) {
+    if (empty(self) == true) return -1;
+
+    return self->tail->data;
+}

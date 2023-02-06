@@ -22,5 +22,7 @@ int size(LinkedList *self);
 bool empty(LinkedList *self);
 int pop_front(LinkedList *self);
 void push_back(LinkedList *self, int value);
+int front(LinkedList *self);
+int back(LinkedList *self);
 
 #endif // ASCII_LINKED_LISTS
