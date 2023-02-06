@@ -20,5 +20,6 @@ void destroy(LinkedList *self);
 void push_front(LinkedList *self, int value);
 int size(LinkedList *self);
 bool empty(LinkedList *self);
+int pop_front(LinkedList *self);
 
 #endif // ASCII_LINKED_LISTS

@@ -61,3 +61,18 @@ int size(LinkedList *self) {
 bool empty(LinkedList *self) {
     return self->size == 0;
 }
+
+int pop_front(LinkedList *self) {
+    if (empty(self) == true) return -1;
+
+    Node *temp = self->head;
+    int data = temp->data;
+    self->head = self->head->next;
+
+    if (self->head == NULL)
+        self->tail = NULL;
+
+    free(temp);
+
+    return data;
+}
