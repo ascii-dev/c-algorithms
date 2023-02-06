@@ -76,3 +76,18 @@ int pop_front(LinkedList *self) {
 
     return data;
 }
+
+void push_back(LinkedList *self, int value) {
+    Node *new_node = malloc(sizeof(Node));
+    new_node->data = value;
+    new_node->next = NULL;
+
+    if (self->tail == NULL)
+        self->tail = self->head = new_node;
+    else {
+        self->tail->next = new_node;
+        self->tail = new_node;
+    }
+
+    self->size++;
+}
