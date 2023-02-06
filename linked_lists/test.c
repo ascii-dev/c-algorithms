@@ -100,6 +100,7 @@ void test_pop_front_returns_data() {
     push_front(new_ll, 4);
 
     assert(pop_front(new_ll) == 4);
+    assert(size(new_ll) == 3);
 
     destroy(new_ll);
 }

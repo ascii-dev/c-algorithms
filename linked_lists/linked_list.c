@@ -74,6 +74,8 @@ int pop_front(LinkedList *self) {
 
     free(temp);
 
+    self->size--;
+
     return data;
 }
 
