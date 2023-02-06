@@ -105,3 +105,19 @@ int back(LinkedList *self) {
 
     return self->tail->data;
 }
+
+int pop_back(LinkedList *self) {
+    if (empty(self) == true) return -1;
+
+    int return_value = self->tail->data;
+    Node *next_to_last = self->head;
+    while (next_to_last->next != self->tail)
+        next_to_last = next_to_last->next;
+
+    next_to_last->next = NULL;
+    free(self->tail);
+    self->tail = next_to_last;
+    self->size--;
+
+    return return_value;
+}
