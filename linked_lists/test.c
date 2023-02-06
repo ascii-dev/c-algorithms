@@ -5,6 +5,8 @@
 
 void test_linked_list_creation();
 void test_push_front_adds_node_to_head();
+void test_size_returns_correct_data();
+void test_empty_function_returns_correct_data();
 
 int main() {
     printf("==============================================================\n");
@@ -13,6 +15,8 @@ int main() {
 
     test_linked_list_creation();
     test_push_front_adds_node_to_head();
+    test_size_returns_correct_data();
+    test_empty_function_returns_correct_data();
 
     return 0;
 }
@@ -41,6 +45,43 @@ void test_push_front_adds_node_to_head() {
 
     assert(new_ll->head->data == 4);
     assert(new_ll->tail->data == 1);
+
+    destroy(new_ll);
+}
+
+void test_size_returns_correct_data() {
+    printf("test size returns correct data\n");
+
+    LinkedList *new_ll = construct();
+
+    assert(size(new_ll) == 0);
+
+    push_front(new_ll, 1);
+
+    assert(size(new_ll) == 1);
+    
+    push_front(new_ll, 2);
+    push_front(new_ll, 3);
+    push_front(new_ll, 4);
+
+    assert(size(new_ll) == 4);
+
+    destroy(new_ll);
+}
+
+void test_empty_function_returns_correct_data() {
+    printf("test empty returns correct data\n");
+
+    LinkedList *new_ll = construct();
+
+    assert(empty(new_ll) == true);
+
+    push_front(new_ll, 1);
+    push_front(new_ll, 2);
+    push_front(new_ll, 3);
+    push_front(new_ll, 4);
+
+    assert(empty(new_ll) == false);
 
     destroy(new_ll);
 }

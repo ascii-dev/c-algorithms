@@ -53,3 +53,11 @@ void push_front(LinkedList *self, int value) {
     
     self->size++;
 }
+
+int size(LinkedList *self) {
+    return self->size;
+}
+
+bool empty(LinkedList *self) {
+    return self->size == 0;
+}

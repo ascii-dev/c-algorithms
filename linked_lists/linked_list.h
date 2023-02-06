@@ -1,6 +1,8 @@
 #ifndef ASCII_LINKED_LISTS
 #define ASCII_LINKED_LISTS
 
+#include <stdbool.h>
+
 typedef struct Node {
     int data;
     struct Node *next;
@@ -16,5 +18,7 @@ typedef struct LinkedList {
 LinkedList *construct();
 void destroy(LinkedList *self);
 void push_front(LinkedList *self, int value);
+int size(LinkedList *self);
+bool empty(LinkedList *self);
 
 #endif // ASCII_LINKED_LISTS
