@@ -217,3 +217,19 @@ int value_n_from_end(LinkedList *self, int n) {
 
     return slow->data;
 }
+
+void reverse(LinkedList *self) {
+    Node *current = self->head;
+    Node *prev = NULL;
+    Node *next = NULL;
+
+    while (current != NULL) {
+        next = current->next;
+        current->next = prev;
+
+        prev = current;
+        current = next;
+    }
+
+    self->head = prev;
+}
