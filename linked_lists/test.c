@@ -16,6 +16,7 @@ void test_value_at_returns_correct_data();
 void test_insert_at_inserts_correctly_at_index();
 void test_erase_at_deletes_correctly_at_index();
 void test_remove_value_deletes_correctly();
+void test_value_n_from_end_returns_correct_data();
 
 int main() {
     printf("==============================================================\n");
@@ -35,6 +36,7 @@ int main() {
     test_insert_at_inserts_correctly_at_index();
     test_erase_at_deletes_correctly_at_index();
     test_remove_value_deletes_correctly();
+    test_value_n_from_end_returns_correct_data();
 
     return 0;
 }
@@ -244,6 +246,26 @@ void test_remove_value_deletes_correctly() {
     assert(remove_value(new_ll, 3) == 0);
     assert(value_at(new_ll, 0) == 4);
     assert(value_at(new_ll, 1) == 2);
+
+    destroy(new_ll);
+}
+
+void test_value_n_from_end_returns_correct_data() {
+    printf("test value_n_from_end returns correct data\n");
+
+    LinkedList *new_ll = construct();
+    push_back(new_ll, 1);
+    push_back(new_ll, 2);
+    push_back(new_ll, 3);
+    push_back(new_ll, 4);
+    push_back(new_ll, 5);
+    push_back(new_ll, 6);
+
+    assert(value_n_from_end(new_ll, 0) == 6);
+    assert(value_n_from_end(new_ll, 1) == 5);
+    assert(value_n_from_end(new_ll, 3) == 3);
+
+    assert(new_ll->size == 6);
 
     destroy(new_ll);
 }

@@ -198,3 +198,21 @@ int remove_value(LinkedList *self, int value) {
 
     return 0;
 }
+
+int value_n_from_end(LinkedList *self, int n) {
+    if (empty(self) == true) return -1;
+    if (n < 0 || n > self->size) return -1;
+
+    Node *slow = self->head;
+    Node *fast = self->head;
+
+    for (int i = n; i > 0; i--)
+        fast = fast->next;
+
+    while (fast->next != NULL) {
+        slow = slow->next;
+        fast = fast->next;
+    }
+
+    return slow->data;
+}
