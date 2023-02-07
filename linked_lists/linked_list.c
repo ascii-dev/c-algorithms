@@ -195,6 +195,7 @@ int remove_value(LinkedList *self, int value) {
     // that I need to look into
     current->data = current->next->data;
     current->next = current->next->next;
+    self->size--;
 
     return 0;
 }
