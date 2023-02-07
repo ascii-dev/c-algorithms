@@ -233,3 +233,13 @@ void reverse(LinkedList *self) {
 
     self->head = prev;
 }
+
+void print(LinkedList *self) {
+    Node *current = self->head;
+    printf("Linked list: ");
+    while(current->next != NULL) {
+        printf("%d->", current->data);
+        current = current->next;
+    }
+    printf("%d\n", current->data);
+}

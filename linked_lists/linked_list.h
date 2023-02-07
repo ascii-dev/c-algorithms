@@ -31,5 +31,6 @@ int erase_at(LinkedList *self, int index);
 int remove_value(LinkedList *self, int value);
 int value_n_from_end(LinkedList *self, int n);
 void reverse(LinkedList *self);
+void print(LinkedList *self);
 
 #endif // ASCII_LINKED_LISTS
