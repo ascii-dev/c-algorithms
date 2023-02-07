@@ -15,7 +15,7 @@
     - reverse() - reverses the list
     - remove_value(value) - removes the first item in the list with this value
 */
-
+#include <stdio.h>
 #include <stdlib.h>
 
 #include "linked_list.h"
@@ -176,6 +176,25 @@ int erase_at(LinkedList *self, int index) {
         self->size--;
         free(to_erase);
     }
+
+    return 0;
+}
+
+int remove_value(LinkedList *self, int value) {
+    if (empty(self) == true) return -1;
+
+    Node *current = self->head;
+
+    while (current != NULL && current->data != value)
+        current = current->next;
+
+    if (current == NULL)
+        return -1;
+
+    // TODO: There probably is a memory leak in here somewhere
+    // that I need to look into
+    current->data = current->next->data;
+    current->next = current->next->next;
 
     return 0;
 }
