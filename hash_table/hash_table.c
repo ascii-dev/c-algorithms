@@ -14,7 +14,6 @@ TODO: work on making the value a string also, instead of ints
 
 #include "hash_table.h"
 
-const int DELETED_FLAG = -1;
 const int DECREMENT_THRESHOLD = 4; // we want to shrink at 1/4th capacity
 const int INCREMENT_THRESHOLD = 2; // we want to expand once we're halfway through
 const int RESIZE_VALUE = 2;
@@ -36,11 +35,13 @@ HashTable *construct_ht() {
 }
 
 void destroy_ht(HashTable *ht) {
-    for (int i = 0; i < ht->capacity; ++i)
-        if (ht->array[i] != NULL) {
+    for (int i = 0; i < ht->capacity; ++i) {
+        if (ht->array[i] != NULL && strcmp(ht->array[i]->key, DELETED_KEY) != 0) {
             free(ht->array[i]->key);
             free(ht->array[i]->value);
         }
+        free(ht->array[i]);
+    }
 
     free(ht->array);
     free(ht);
@@ -66,10 +67,17 @@ void add(HashTable *ht, const char *key, const char *value) {
     item->value = strdup(value);
 
     int index = hash(ht, key);
-    if (ht->array[index] != NULL) {
-        while (index < ht->capacity)
-            if (ht->array[index++] == NULL)
-                break;
+    while (index < ht->capacity) {
+        HashTableItem *item = ht->array[index];
+        if (item == NULL)
+            break;
+
+        if (strcmp(item->key, DELETED_KEY) == 0) {
+            free(item);
+            break;
+        }
+
+        index++;
     }
 
     ht->array[index] = item;
@@ -84,7 +92,7 @@ int exists_ht(HashTable *ht, const char *key) {
 HashTableItem *get_ht(HashTable *ht, const char *key) {
     int index = hash(ht, key);
     while (index < ht->capacity) {
-        HashTableItem *item = ht->array[index++];
+        HashTableItem *item = ht->array[index];
         if (item == NULL)
             break;
 
@@ -95,6 +103,16 @@ HashTableItem *get_ht(HashTable *ht, const char *key) {
     }
 
     return NULL;
+}
+
+void remove_ht(HashTable *ht, const char *key) {
+    HashTableItem *item = get_ht(ht, key);
+    if (item != NULL) {
+        free(item->key);
+        free(item->value);
+        item->key = DELETED_KEY;
+        item->value = DELETED_KEY;
+    }
 }
 
 void _resize(HashTable *ht, int new_capacity) {

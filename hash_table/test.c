@@ -9,6 +9,7 @@ void test_hash_function_returns_correct_value();
 void test_add_works_as_expected();
 void test_exists_checks_for_key_membership();
 void test_get_returns_correct_value();
+void test_remove_works_as_expected();
 
 int main() {
     printf("==============================================================\n");
@@ -20,6 +21,7 @@ int main() {
     test_add_works_as_expected();
     test_exists_checks_for_key_membership();
     test_get_returns_correct_value();
+    test_remove_works_as_expected();
 
     return 0;
 }
@@ -92,6 +94,24 @@ void test_get_returns_correct_value() {
     HashTableItem *another_item = get_ht(ht, "trevor");
 
     assert(another_item == NULL);
+
+    destroy_ht(ht);
+}
+
+void test_remove_works_as_expected() {
+    printf("test hash table remove function works as expected\n");
+
+    HashTable *ht = construct_ht();
+
+    add(ht, "domino", "etremis");
+
+    assert(strcmp(ht->array[6]->key, "domino") == 0);
+    assert(strcmp(ht->array[6]->value, "etremis") == 0);
+
+    remove_ht(ht, "domino");
+
+    assert(strcmp(ht->array[6]->key, DELETED_KEY) == 0);
+    assert(strcmp(ht->array[6]->value, DELETED_KEY) == 0);
 
     destroy_ht(ht);
 }
