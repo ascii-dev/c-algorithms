@@ -17,5 +17,6 @@ HashTable *construct_ht();
 void destroy_ht(HashTable *ht);
 int hash(HashTable *ht, char key[]);
 void add(HashTable *ht, char key[], char value[]);
+int exists_ht(HashTable *ht, char key[]);
 
 #endif // ASCII_HASH_TABLE

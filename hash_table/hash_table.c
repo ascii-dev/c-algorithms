@@ -68,6 +68,17 @@ void add(HashTable *ht, char key[], char value[]) {
     ht->size++;
 }
 
+int exists_ht(HashTable *ht, char key[]) {
+    int index = hash(ht, key);
+    while (ht->array[index] != NULL) {
+        if (strcmp(ht->array[index++]->key, key) == 0)
+            return 1;
+        
+    }
+
+    return 0;
+}
+
 void _resize(HashTable *ht, int new_capacity) {
     int *array = malloc(sizeof(HashTableItem) * new_capacity);
     for (int i = 0; i < ht->capacity; i++)

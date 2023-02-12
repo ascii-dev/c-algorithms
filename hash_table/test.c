@@ -7,6 +7,7 @@
 void test_hash_table_creation_successful();
 void test_hash_function_returns_correct_value();
 void test_add_works_as_expected();
+void test_exists_checks_for_key_membership();
 
 int main() {
     printf("==============================================================\n");
@@ -16,6 +17,7 @@ int main() {
     test_hash_table_creation_successful();
     test_hash_function_returns_correct_value();
     test_add_works_as_expected();
+    test_exists_checks_for_key_membership();
 
     return 0;
 }
@@ -55,6 +57,19 @@ void test_add_works_as_expected() {
 
     assert(strcmp(ht->array[6]->key, "domino") == 0);
     assert(strcmp(ht->array[6]->value, "etremis") == 0);
+
+    destroy_ht(ht);
+}
+
+void test_exists_checks_for_key_membership() {
+    printf("test exists function checks for key membership\n");
+
+    HashTable *ht = construct_ht();
+
+    add(ht, "domino", "etremis");
+
+    assert(exists_ht(ht, "domino") == 1);
+    assert(exists_ht(ht, "lipa") == 0);
 
     destroy_ht(ht);
 }
