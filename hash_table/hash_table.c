@@ -27,18 +27,26 @@ HashTable *construct_ht() {
     HashTable *ht = malloc(sizeof(HashTable));
     ht->size = 0;
     ht->capacity = DEFAULT_CAPACITY;
+    ht->array = malloc(sizeof(HashTableItem) * ht->capacity);
 
-    for (int i = 0; i < ht->capacity; i++)
+    for (int i = 0; i < ht->capacity; ++i)
         ht->array[i] = NULL;
 
     return ht;
 }
 
 void destroy_ht(HashTable *ht) {
+    for (int i = 0; i < ht->capacity; ++i)
+        if (ht->array[i] != NULL) {
+            free(ht->array[i]->key);
+            free(ht->array[i]->value);
+        }
+
+    free(ht->array);
     free(ht);
 }
 
-int hash(HashTable *ht, char key[]) {
+int hash(HashTable *ht, const char *key) {
     // TODO: work on a better hash function that doesn't rely
     // on all of the characters in key as this is going to
     // get super slow with the length of the key.
@@ -46,16 +54,16 @@ int hash(HashTable *ht, char key[]) {
     int len = strlen(key);
     for (int i = 0; i < len; i++)
         char_value += key[i];
-    
+
     return char_value % ht->capacity;
 }
 
-void add(HashTable *ht, char key[], char value[]) {
+void add(HashTable *ht, const char *key, const char *value) {
     _expand(ht);
 
     HashTableItem *item = malloc(sizeof(HashTableItem));
-    item->key = key;
-    item->value = value;
+    item->key = strdup(key);
+    item->value = strdup(value);
 
     int index = hash(ht, key);
     if (ht->array[index] != NULL) {
@@ -68,15 +76,25 @@ void add(HashTable *ht, char key[], char value[]) {
     ht->size++;
 }
 
-int exists_ht(HashTable *ht, char key[]) {
+int exists_ht(HashTable *ht, const char *key) {
+    HashTableItem *item = get_ht(ht, key);
+    return (item != NULL) ? 1 : 0;
+}
+
+HashTableItem *get_ht(HashTable *ht, const char *key) {
     int index = hash(ht, key);
-    while (ht->array[index] != NULL) {
-        if (strcmp(ht->array[index++]->key, key) == 0)
-            return 1;
-        
+    while (index < ht->capacity) {
+        HashTableItem *item = ht->array[index++];
+        if (item == NULL)
+            break;
+
+        else if (strcmp(item->key, key) == 0)
+            return item;
+
+        index++;
     }
 
-    return 0;
+    return NULL;
 }
 
 void _resize(HashTable *ht, int new_capacity) {
@@ -98,4 +116,13 @@ void _expand(HashTable *ht) {
 void _shrink(HashTable *ht) {
     if (ht->capacity / ht->size <= DECREMENT_THRESHOLD)
         _resize(ht, ht->capacity / RESIZE_VALUE);
+}
+
+void print_ht(HashTable *ht) {
+    for (int i = 0; i < ht->capacity; ++i)
+        if (ht->array[i] != NULL) {
+            printf("(%s, %s)\n", ht->array[i]->key, ht->array[i]->value);
+        }
+    
+    printf("------------\n");
 }

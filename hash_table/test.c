@@ -8,6 +8,7 @@ void test_hash_table_creation_successful();
 void test_hash_function_returns_correct_value();
 void test_add_works_as_expected();
 void test_exists_checks_for_key_membership();
+void test_get_returns_correct_value();
 
 int main() {
     printf("==============================================================\n");
@@ -18,6 +19,7 @@ int main() {
     test_hash_function_returns_correct_value();
     test_add_works_as_expected();
     test_exists_checks_for_key_membership();
+    test_get_returns_correct_value();
 
     return 0;
 }
@@ -70,6 +72,26 @@ void test_exists_checks_for_key_membership() {
 
     assert(exists_ht(ht, "domino") == 1);
     assert(exists_ht(ht, "lipa") == 0);
+
+    destroy_ht(ht);
+}
+
+void test_get_returns_correct_value() {
+    printf("test get function returns correct value\n");
+
+    HashTable *ht = construct_ht();
+
+    add(ht, "lipa", "dua");
+    add(ht, "domino", "extremis");
+
+    HashTableItem *item = get_ht(ht, "domino");
+
+    assert(strcmp(item->key, "domino") == 0);
+    assert(strcmp(item->value, "extremis") == 0);
+
+    HashTableItem *another_item = get_ht(ht, "trevor");
+
+    assert(another_item == NULL);
 
     destroy_ht(ht);
 }

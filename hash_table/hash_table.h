@@ -10,13 +10,15 @@ typedef struct {
 
 typedef struct {
     int size, capacity;
-    HashTableItem * array[DEFAULT_CAPACITY];
+    HashTableItem **array;
 } HashTable;
 
 HashTable *construct_ht();
 void destroy_ht(HashTable *ht);
-int hash(HashTable *ht, char key[]);
-void add(HashTable *ht, char key[], char value[]);
-int exists_ht(HashTable *ht, char key[]);
+int hash(HashTable *ht, const char *key);
+void add(HashTable *ht, const char *key, const char *value);
+int exists_ht(HashTable *ht, const char *key);
+HashTableItem *get_ht(HashTable *ht,const  char *key);
+void print_ht(HashTable *ht);
 
 #endif // ASCII_HASH_TABLE
