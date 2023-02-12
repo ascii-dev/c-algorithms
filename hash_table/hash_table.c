@@ -5,6 +5,8 @@ IMPLEMENT HASH TABLE (WITH ARRAY USING LINEAR PROBING)
 - exists(key)
 - get(key)
 - remove(key)
+
+TODO: work on making the value a string also, instead of ints
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,21 +15,26 @@ IMPLEMENT HASH TABLE (WITH ARRAY USING LINEAR PROBING)
 #include "hash_table.h"
 
 const int DELETED_FLAG = -1;
+const int DECREMENT_THRESHOLD = 4; // we want to shrink at 1/4th capacity
+const int INCREMENT_THRESHOLD = 2; // we want to expand once we're halfway through
+const int RESIZE_VALUE = 2;
+
+void _resize(HashTable *ht, int new_capacity);
+void _expand(HashTable *ht);
+void _shrink(HashTable *ht);
 
 HashTable *construct_ht() {
     HashTable *ht = malloc(sizeof(HashTable));
     ht->size = 0;
-    ht->capacity = 16;
-    ht->array = (int *) malloc(sizeof(int) * ht->capacity);
+    ht->capacity = DEFAULT_CAPACITY;
 
     for (int i = 0; i < ht->capacity; i++)
-        ht->array[i] = (int) NULL; // casting probably isn't the right way
+        ht->array[i] = NULL;
 
     return ht;
 }
 
 void destroy_ht(HashTable *ht) {
-    free(ht->array);
     free(ht);
 }
 
@@ -41,4 +48,43 @@ int hash(HashTable *ht, char key[]) {
         char_value += key[i];
     
     return char_value % ht->capacity;
+}
+
+void add(HashTable *ht, char key[], char value[]) {
+    _expand(ht);
+
+    HashTableItem *item = malloc(sizeof(HashTableItem));
+    item->key = key;
+    item->value = value;
+
+    int index = hash(ht, key);
+    if (ht->array[index] != NULL) {
+        while (index < ht->capacity)
+            if (ht->array[index++] == NULL)
+                break;
+    }
+
+    ht->array[index] = item;
+    ht->size++;
+}
+
+void _resize(HashTable *ht, int new_capacity) {
+    int *array = malloc(sizeof(HashTableItem) * new_capacity);
+    for (int i = 0; i < ht->capacity; i++)
+        if (ht->array[i] != NULL) {
+            HashTableItem *current = ht->array[i];
+            add(ht, current->key, current->value);
+        }
+
+    ht->capacity = new_capacity;
+}
+
+void _expand(HashTable *ht) {
+    if (ht->capacity - ht->size <= INCREMENT_THRESHOLD)
+        _resize(ht, ht->capacity * RESIZE_VALUE);
+}
+
+void _shrink(HashTable *ht) {
+    if (ht->capacity / ht->size <= DECREMENT_THRESHOLD)
+        _resize(ht, ht->capacity / RESIZE_VALUE);
 }
